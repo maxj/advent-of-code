@@ -1,20 +1,19 @@
+
 function findCheckSum(key)
-k = 1
-top = 5
-roomId = replace(key[1:rsearch(key, "-")[1]],"-","")
-uniques = sort(unique(roomId))
-kristen = Array{Any}(length(uniques), 2)
-
-for character in uniques
-  count = length(matchall(Regex("$character"),roomId))
-  kristen[k,1] = character
-  kristen[k,2] = -count
-  k+=1
-end
-
-sorted = sortrows(kristen, by=x->(x[2],x[1]), rev=true)
-checksum = join(sorted[end:-1:size(sorted)[1]-top+1,1], "")
-return checksum
+    k = 1
+    top = 5
+    roomId = replace(key[1:rsearch(key, "-")[1]],"-","")
+    uniques = sort(unique(roomId))
+    result = Array{Any}(length(uniques), 2)
+    for character in uniques
+        count = length(matchall(Regex("$character"),roomId))
+        result[k,1] = character
+        result[k,2] = -count
+        k+=1
+    end
+    sorted = sortrows(result, by=x->(x[2],x[1]), rev=true)
+    checksum = join(sorted[end:-1:size(sorted)[1]-top+1,1], "")
+    return checksum
 end
 
 function getProvidedChecksum(key)
